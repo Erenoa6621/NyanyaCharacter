@@ -1,0 +1,95 @@
+{
+  "name": "AIONIACS Go Backend",
+  // ルートにある compose をそのまま利用
+  "dockerComposeFile": [
+    "../docker-compose.yaml"
+  ],
+  // 開発用に入るサービス名
+  "service": "go",
+  // Dockerfile で設定した WORKDIR
+  "workspaceFolder": "/src",
+
+  /* VS Code カスタマイズ -------------------------------------------------- */
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "golang.go",
+        "766b.go-outliner",
+        "liuchao.go-struct-tag",
+        "eamodio.gitlens",
+        "gruntfuggly.todo-tree",
+        "mhutchie.git-graph",
+        "trixnz.go-to-method",
+        "esbenp.prettier-vscode",
+        "ms-azuretools.vscode-docker",
+        "github.copilot",
+        "github.copilot-chat",
+        "usernamehw.errorlens",
+        "oderwat.indent-rainbow",
+        "christian-kohler.path-intellisense",
+        "vscode-icons-team.vscode-icons"
+      ],
+      "settings": {
+        "terminal.integrated.defaultProfile.linux": "bash",
+        "go.toolsManagement.checkForUpdates": "local",
+        "go.useLanguageServer": true,
+        "go.gopath": "/go",
+        "go.goroot": "/usr/local/go",
+        "editor.formatOnSave": true,
+        "go.lintTool": "golangci-lint",
+        "go.lintFlags": [
+          "--config=${workspaceFolder}/.golangci.yml"
+        ],
+        "go.diagnostic.vulncheck": "Imports",
+        "go.lintOnSave": "workspace",
+        "[go]": {
+          "editor.formatOnSave": true,
+          "editor.codeActionsOnSave": {
+            "source.organizeImports": true,
+            "source.fixAll": true
+          }
+        },
+        "go.useCodeSnippetsOnFunctionSuggest": true,
+        "go.inferGopath": false,
+        "go.autocompleteUnimportedPackages": true,
+        "gopls": {
+          "ui.diagnostic.analyses": {
+            "unusedparams": true,
+            "shadow": true
+          }
+        }
+      }
+    }
+  },
+
+  /* 初期化コマンド ------------------------------------------------------- */
+  "postCreateCommand": "go mod tidy",
+
+  /* コンテナ内で使える環境変数 ----------------------------------------- */
+  "remoteEnv": {
+    "MYSQL_USER": "user",
+    "MYSQL_PASSWORD": "pwd",
+    "MYSQL_DATABASE": "aioniacs_dev"
+  },
+
+  /* ローカル ↔ コンテナでポート中継 ------------------------------------- */
+  "forwardPorts": [
+    8080,   // API
+    3320,   // MySQL
+    9100,   // MinIO
+    9101,   // MinIO Console
+    5673,   // RabbitMQ
+    15673   // RabbitMQ Console
+  ],
+  "portsAttributes": {
+    "8080": { "label": "Go API" },
+    "3320": { "label": "MySQL" },
+    "9100": { "label": "MinIO" },
+    "9101": { "label": "MinIO Console" },
+    "5673": { "label": "RabbitMQ" },
+    "15673": { "label": "RabbitMQ Console" }
+  },
+
+  /* UID/GID を root に合わせる（変更したい場合は "vscode" へ書き換え） */
+  "remoteUser": "root"
+}

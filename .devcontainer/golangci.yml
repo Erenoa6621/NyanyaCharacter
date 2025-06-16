@@ -1,0 +1,34 @@
+linters:
+  enable:
+    - gocritic
+    - revive
+    - staticcheck
+    - errcheck
+
+linters-settings:
+  revive:
+    rules:
+      - name: add-constant
+        severity: error
+        disabled: false
+        arguments:
+          - maxLitCount: "1"
+          - allowStrs: '""'
+          - allowInts: "0,1"
+          - allowFloats: "0.0,1.0"
+
+  gocritic:
+    enabled-tags:
+      - diagnostic
+      - style
+      - performance
+    enabled-checks:
+      - rangeValCopy
+      - dupSubExpr
+      - dupArg
+      - argOrder
+      - badCall
+      - nilValReturn
+      - singleCaseSwitch
+      - sloppyLen
+      - weakCond

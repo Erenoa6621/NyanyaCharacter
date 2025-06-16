@@ -2,12 +2,12 @@
   "name": "AIONIACS Go Backend",
   // ルートにある compose をそのまま利用
   "dockerComposeFile": [
-    "../docker-compose.yaml"
+    "../../docker-compose.yaml"
   ],
   // 開発用に入るサービス名
   "service": "go",
   // Dockerfile で設定した WORKDIR
-  "workspaceFolder": "/src",
+  "workspaceFolder": "/go/src/app",
 
   /* VS Code カスタマイズ -------------------------------------------------- */
   "customizations": {

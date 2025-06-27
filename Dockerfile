@@ -5,6 +5,7 @@ RUN go mod download
 RUN go build -o /go/bin/api ./cmd/api
 
 FROM alpine:3.20
+RUN apk add --no-cache git openssh-client
 ENV TZ=Asia/Tokyo
 COPY --from=build /go/bin/api /usr/local/bin/api
 EXPOSE 8080
